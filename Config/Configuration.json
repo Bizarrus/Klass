@@ -1,0 +1,13 @@
+﻿{
+	"user_agent":		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36 OPR/68.0.3618.63",
+	"applet_version":	"k90cab",
+	"proxy":		{
+		"enabled":	false,
+		"hostname":	"127.0.0.1",
+		"port":		2710
+	},
+	"modules": [
+		"AntiAdmin",
+		"StayOnline"
+	]
+}

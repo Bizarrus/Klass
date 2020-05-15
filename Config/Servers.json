@@ -1,0 +1,19 @@
+﻿[
+	{
+		"id":		"DE",
+		"port":		2710,
+		"hostname":	"chat.knuddels.de"
+	}, {
+		"id":		"DEV",
+		"port":		1337,
+		"hostname":	"developer.knuddels.de"
+	}, {
+		"id":		"COM",
+		"port":		2712,
+		"hostname":	"chat.knuddels.de"
+	}, {
+		"id":		"AT",
+		"port":		2711,
+		"hostname":	"chat.knuddels.de"
+	}
+]
