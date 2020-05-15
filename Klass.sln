@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Klass", "Klass\Klass.csproj", "{4A2CE5D7-1367-4A8B-B2A6-1B9CC8A21ABF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnuCli", "KnuCli\KnuCli.csproj", "{2F8E2BAB-678A-479A-8E0E-AD18AF40B9E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A2CE5D7-1367-4A8B-B2A6-1B9CC8A21ABF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A2CE5D7-1367-4A8B-B2A6-1B9CC8A21ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A2CE5D7-1367-4A8B-B2A6-1B9CC8A21ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A2CE5D7-1367-4A8B-B2A6-1B9CC8A21ABF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F8E2BAB-678A-479A-8E0E-AD18AF40B9E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F8E2BAB-678A-479A-8E0E-AD18AF40B9E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F8E2BAB-678A-479A-8E0E-AD18AF40B9E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F8E2BAB-678A-479A-8E0E-AD18AF40B9E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {265C3095-9669-425D-9C03-197A8C893ABA}
+	EndGlobalSection
+EndGlobal
