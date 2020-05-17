@@ -11,3 +11,8 @@ Knuddels-Client based on Klass
 
 ![Start](https://raw.githubusercontent.com/Bizarrus/Klass/master/Screenshots/Start.png)
 ![Login](https://raw.githubusercontent.com/Bizarrus/Klass/master/Screenshots/Login.png)
+
+# KnuPro
+Proxy based on Klass
+
+> You must change your Host files to map the subdomain `chat.knuddels.de` to `127.0.0.1`
