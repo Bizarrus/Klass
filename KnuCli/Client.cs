@@ -13,9 +13,9 @@ using System.Windows;
 using Klass.Helper;
 using KnuCli.Model;
 using System.Collections.Generic;
-
 namespace KnuCli {
     public class Client : IClient {
+        private App core;
         private string hostname         = "";
         private int port                = -1;
         private byte[] key_connection   = null;
@@ -26,12 +26,17 @@ namespace KnuCli {
         protected Huffman huffman;
         protected Protocols protocols;
 
-        public Client(string hostname, int port) {
+        public Client(App core, string hostname, int port) {
+            this.core       = core;
             this.huffman    = new Huffman();
             this.protocols  = new Protocols(this);
             this.login      = new Login(this);
             this.hostname   = hostname;
             this.port       = port;
+        }
+
+        public App GetCore() {
+            return this.core;
         }
 
         public void setProxy(Proxy proxy) {
@@ -69,7 +74,11 @@ namespace KnuCli {
             new Thread(new ThreadStart(Run)).Start();
             
             Send(this.protocols.GetPacket("CONNECT").Get(), false, false);
-            Send(this.protocols.GetPacket("HANDSHAKE").Get());
+            Send(((Klass.Packets.Handshake) this.protocols.GetPacket("HANDSHAKE")).Get(this.GetCore().GetConfig().GetAppletVersion()));
+        }
+
+        public Protocols GetProtocols() {
+            return this.protocols;
         }
 
         private void Run() {
@@ -115,6 +124,10 @@ namespace KnuCli {
 
         public void SetPasswordHash(string value) {
             this.hash_password = value;
+        }
+
+        public string GetPasswordHash() {
+            return this.hash_password;
         }
 
         public void SetSuggestion(string value) {

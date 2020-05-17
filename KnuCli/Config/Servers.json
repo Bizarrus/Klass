@@ -4,16 +4,28 @@
 		"port":		2710,
 		"hostname":	"chat.knuddels.de"
 	}, {
+		"id":		"AT",
+		"port":		2711,
+		"hostname":	"chat.knuddels.de"
+	}, {
 		"id":		"DEV",
 		"port":		1337,
 		"hostname":	"developer.knuddels.de"
 	}, {
-		"id":		"COM",
-		"port":		2712,
+		"id":		"LOCAL",
+		"port":		2710,
+		"hostname":	"localhost"
+	}, {
+		"id":		"TEST",
+		"port":		2720,
 		"hostname":	"chat.knuddels.de"
 	}, {
-		"id":		"AT",
-		"port":		2711,
+		"id":		"BRANCH1",
+		"port":		2721,
+		"hostname":	"chat.knuddels.de"
+	}, {
+		"id":		"BRANCH2",
+		"port":		2722,
 		"hostname":	"chat.knuddels.de"
 	}
 ]

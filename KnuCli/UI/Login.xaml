@@ -13,7 +13,7 @@
         mc:Ignorable="d"
         Title="[KnuCli] Login" Height="450" Width="350">
     <DockPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="2,5">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="2,5" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Click="Start">Login</Button>
         </StackPanel>
         <Grid>

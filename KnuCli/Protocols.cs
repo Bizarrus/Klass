@@ -27,6 +27,7 @@ namespace KnuCli {
             this.protocols.Add(new Butler());
             this.protocols.Add(new Connection());
             this.protocols.Add(new ChannelList());
+            this.protocols.Add(new Popup());
         }
 
         public void Handle(string data) {

@@ -27,7 +27,7 @@ namespace KnuCli {
         }
 
         public Client CreateClient(string hostname, int port) {
-            Client client = new Client(hostname, port);
+            Client client = new Client(this, hostname, port);
 
             this.clients.Add(client);
 

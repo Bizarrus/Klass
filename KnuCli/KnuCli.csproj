@@ -73,6 +73,7 @@
     <Compile Include="Protocol\ChannelList.cs" />
     <Compile Include="Protocol\Connection.cs" />
     <Compile Include="Protocol\Ping.cs" />
+    <Compile Include="Protocol\Popup.cs" />
     <Compile Include="UI\ClientCreation.xaml.cs">
       <DependentUpon>ClientCreation.xaml</DependentUpon>
     </Compile>
