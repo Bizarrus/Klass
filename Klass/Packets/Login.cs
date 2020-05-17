@@ -11,14 +11,18 @@ namespace Klass.Packets {
             this.Name   = "n";
         }
 
-        public byte[] Get(string nickname, string password) {
+        public byte[] Get(string nickname, string password, string channel) {
             BinaryBuffer buffer = new BinaryBuffer();
 
             buffer.Append(this.Name);
             buffer.AddNullByte();
+            buffer.Append(channel);
+            buffer.AddNullByte();
             buffer.Append(nickname);
             buffer.AddNullByte();
             buffer.Append(password);
+            buffer.AddNullByte();
+            buffer.Append("T");
 
             return buffer.GetBytes();
         }

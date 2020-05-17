@@ -11,7 +11,7 @@ namespace Klass.Networking {
             byte[] header;
             int length = data.Length - 1;
 
-            if (length < 128) {
+            if(length < 128) {
                 header = new byte[] {
                     (byte) length
                 };
@@ -31,16 +31,31 @@ namespace Klass.Networking {
             }
 
             byte[] packet = new byte[header.Length + data.Length];
+
             header.CopyTo(packet, 0);
             data.CopyTo(packet, header.Length);
+
             return packet;
         }
 
-        public static byte[] Decode(NetworkStream stream) {
+        public static byte[] Decode(Stream stream) {
+            return Decode(stream, null);
+        }
+        
+        public static byte[] Decode(byte[] stream) {
             return Decode(stream, null);
         }
 
-        public static byte[] Decode(NetworkStream stream, byte[] secret) {
+        public static byte[] Decode(byte[] data, byte[] secret) {
+            MemoryStream stream = new MemoryStream();
+
+            stream.Write(data, 0, data.Length);
+            stream.Seek(0, SeekOrigin.Begin);
+
+            return Decode(stream, secret);
+        }
+
+        public static byte[] Decode(Stream stream, byte[] secret) {
             int size;
             sbyte header = (sbyte) stream.ReadByte();
 

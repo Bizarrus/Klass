@@ -11,13 +11,13 @@ namespace Klass.Packets {
             this.Name   = "t";
         }
 
-        public override byte[] Get() {
+        public byte[] Get(string version) {
             BinaryBuffer buffer = new BinaryBuffer();
 
             // @ToDo variable settings
             buffer.Append(this.Name);
             buffer.AddNullByte();
-            buffer.Append("V9.0acb ");                          // Client Version
+            buffer.Append(version);                             // Client Version
             buffer.AddNullByte();
             buffer.Append("http://www.knuddels.de/");           // Referer / Location
             buffer.AddNullByte();

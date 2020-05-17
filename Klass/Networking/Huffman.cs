@@ -4026,10 +4026,11 @@ namespace Klass.Networking {
 			byte[] buffer = new byte[bits.Length / 8 + 1];
 			for (var i = 0; i < buffer.Length; i++) {
 				var bitCount = bits.Length - (i * 8);
+
 				buffer[i] = (byte) Convert.ToInt32(
 													bits.Substring(
-														bitCount - 8 < 0 ? 0 : bitCount - 8,
-														bitCount - 8 < 0 ? bitCount : 8
+														bitCount - 8 <= 0 ? 0 : bitCount - 8,
+														bitCount - 8 <= 0 ? bitCount : 8
 													)
 													, 2);
 			}

@@ -12,6 +12,10 @@ namespace Klass.Helper {
             this.tokens = data.Split('\0');
         }
 
+        public string GetText() {
+            return String.Join("\\0", this.tokens);
+        }
+
         public string GetString(int index) {
             try {
                 return this.tokens[index];
