@@ -22,7 +22,7 @@ namespace KnuCli.UI {
         private void Start(object sender, RoutedEventArgs e) {
             switch(this.client.GetCore().GetConfig().GetAppletVersion()) {
                 case "k90cab":
-                    string hash = Klass.Passwords.k90cab.Hash(this.Password.Text, this.client.GetPasswordHash());
+                    string hash = Klass.Passwords.K90cab.Hash(this.Password.Text, this.client.GetPasswordHash());
 
                     SendLogin(this.Nickname.Text, hash, this.Channel.Text);
                 break;

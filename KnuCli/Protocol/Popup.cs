@@ -1,4 +1,8 @@
-﻿using Klass.Helper;
+﻿/**
+ * @Author     Bizzi
+ * @Version    1.0.0
+ */
+using Klass.Helper;
 using System;
 using System.Windows;
 

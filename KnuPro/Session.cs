@@ -175,10 +175,26 @@ namespace KnuPro {
                         Debugger.Write("[Client > Server (" + Utils.GetOpcode(Data) + ")] " + Utils.LogPacket(Decoded) + "\n");
                         Console.WriteLine("\t" + Data + "\n");
 
+                        int size;
+
                         switch(Utils.GetOpcode(Data)) {
+                            case "t":
+                                Debugger.Write("!!!!!!!!!!!!!!!!!!!!!!!!!!!! HANDSHAKE !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                                size = Utils.CountToken(Data);
+                                Debugger.Write("Size: " + size);
+
+                                for(int index = 0; index < size; index++) {
+                                    string token = Utils.GetToken(Data, index);
+
+                                    Debugger.Write("Token " + index +": " + Utils.StringToHex(token)  + " (" + token + ")\n");
+                                }
+
+                                Debugger.Write("!!!!!!!!!!!!!!!!!!!!!!!!!!!! HANDSHAKE !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                                Environment.Exit(0);
+                            break;
                             case "n":
                                 Debugger.Write("!!!!!!!!!!!!!!!!!!!!!!!!!!!! LOGIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                                int size = Utils.CountToken(Data);
+                                size = Utils.CountToken(Data);
                                 Debugger.Write("Size: " + size);
 
                                 for(int index = 0; index < size; index++) {
