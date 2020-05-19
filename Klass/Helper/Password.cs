@@ -1,4 +1,8 @@
-﻿using System;
+﻿/**
+ * @Author     Bizzi
+ * @Version    1.0.0
+ */
+using System;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;

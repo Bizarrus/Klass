@@ -3,6 +3,7 @@
  * @Version    1.0.0
  */
 using Klass.Helper;
+using System.Text.RegularExpressions;
 
 namespace Klass.Packets {
     public class Handshake : Packet {
@@ -11,13 +12,37 @@ namespace Klass.Packets {
             this.Name   = "t";
         }
 
+        private string CreateVersion(string version) {
+            Regex regex = new Regex(@"k([0-9]+)([a-z]+)");
+            Match match = regex.Match(version);
+
+            if(match.Success) {
+                string number   = match.Groups[1].Value;
+                string name     = match.Groups[2].Value;
+
+                if(!number.Contains(".")) {
+                    char[] values   = number.ToCharArray();
+                    number          = new string(new char[] {
+                        values[0],
+                        '.',
+                        values[1]
+                    });
+                }
+
+                return "V" + number + name + " ";
+            }
+
+            return version + " ";
+        }
+
         public byte[] Get(string version) {
             BinaryBuffer buffer = new BinaryBuffer();
 
             // @ToDo variable settings
             buffer.Append(this.Name);
             buffer.AddNullByte();
-            buffer.Append(version);                             // Client Version
+            // k90cab
+            buffer.Append(CreateVersion(version));              // Client Version
             buffer.AddNullByte();
             buffer.Append("http://www.knuddels.de/");           // Referer / Location
             buffer.AddNullByte();
