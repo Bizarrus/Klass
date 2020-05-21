@@ -3,7 +3,6 @@
  * @Version    1.0.0
  */
 using System.IO;
-using System.Net.Sockets;
 
 namespace Klass.Networking {
     public class Bundle {
@@ -26,7 +25,7 @@ namespace Klass.Networking {
                 header[0]   = (byte) (size << 5 | 0x80 | length & 0x1F);
 
                 for(int index = 1; index < header.Length; index++) {
-                    header[index] = (byte) (length >> 8 * (index - 1) + 5);
+                    header[index] = (byte) ((uint) length >> 8 * (index - 1) + 5);
                 }
             }
 
@@ -68,7 +67,7 @@ namespace Klass.Networking {
             } else {
                 size        = (header & 0x1F) + 1;
 
-                for(int index = 0; index < ((header & 0x60) >> 5); index++) {
+                for(int index = 0; index < (int) ((uint) (header & 0x60) >> 5); index++) {
                     size += (stream.ReadByte() << (index << 3) + 5);
                 }
             }
