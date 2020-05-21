@@ -125,7 +125,7 @@ namespace Klass.KCode {
 							if(Array.IndexOf(data, (char) Type.BOLD, position - 1) > -1) {
 								if(is_bold) {
 									is_bold = false;
-									bold[1] = visual_position;
+									bold[1] = output.ToString().Length;
 									bolds.Add(bold);
 									bold = new int[] { -1, -1 };
 									continue;
@@ -149,7 +149,7 @@ namespace Klass.KCode {
 							if(Array.IndexOf(data, (char) Type.ITALIC, position - 1) > -1) {
 								if(is_italic) {
 									is_italic = false;
-									italic[1] = visual_position;
+									italic[1] = output.ToString().Length;
 									italics.Add(italic);
 									italic = new int[] { -1, -1 };
 									continue;
@@ -172,8 +172,9 @@ namespace Klass.KCode {
 						if(Array.IndexOf(data, (char) Type.EXTENDED, position - 1) > -1) {
 							if(is_extended) {
 								is_extended = false;
-								extended[1] = visual_position;
-								output.Append(ParseExtended(entry, extended_content.ToString(), extended));
+								extended[1] = output.ToString().Length;
+								output.Append(ParseExtended(entry, extended_content.ToString(), (position + 1 < data.Length ? data[position + 1] : '-'), extended));
+								extended[1] = output.ToString().Length;
 								extended_content = new StringBuilder();
 								extended = new int[] { -1, -1 };
 								continue;
@@ -182,8 +183,8 @@ namespace Klass.KCode {
 
 						extended[0] = visual_position;
 						is_extended = !is_extended;
-						break;
-						default:
+					break;
+					default:
 						if(is_extended) {
 							extended_content.Append(current);
 						} else {
@@ -201,7 +202,7 @@ namespace Klass.KCode {
 			return result;
 		}
 
-		private string ParseExtended(KCodeElement element, string data, int[] position) {
+		private string ParseExtended(KCodeElement element, string data, char next, int[] position) {
 			/* Image or Link */
 			if(data.StartsWith(">") && data.EndsWith("<")) {
 				string url = data.Substring(1, data.Length - 2);
@@ -274,9 +275,7 @@ namespace Klass.KCode {
 
 			/* Color */
 			} else {
-				char[] chars    = data.ToCharArray();
-				Color color     = GetColor(chars[0], (chars.Length == 2 ? chars[1] : '0'));
-
+				Color color     = GetColor((char) data[0], next);
 				Extending.Color style = new Extending.Color();
 				style.SetPosition(position);
 				style.SetValue((object) color);

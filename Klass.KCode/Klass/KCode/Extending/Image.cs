@@ -8,7 +8,11 @@ namespace Klass.KCode.Extending {
 		}
 
 		public new void SetValue(object value) {
-			base.SetValue(new BitmapImage(new Uri((string) value)));
+			try {
+				base.SetValue(new BitmapImage(new Uri((string) value)));
+			} catch(Exception e) {
+				Console.WriteLine("Error: Unknown Image URL!");
+			}
 		}
 
 		public BitmapImage GetImage() {

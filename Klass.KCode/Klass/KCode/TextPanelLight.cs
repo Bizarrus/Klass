@@ -45,6 +45,10 @@ namespace Klass.KCode {
 		public void SetContent(string content) {
 			this.content = content;
 			this.elements = this.parser.Parse(this.content);
+			Repaint();
+		}
+
+		public void Repaint() {
 			InvalidateVisual();
 		}
 
