@@ -17,6 +17,11 @@ Proxy based on Klass
 
 > You must change your Host files to map the subdomain `chat.knuddels.de` to `127.0.0.1`
 
+# KnuDes
+A KCode Designer.
+
+![KnuDes](https://raw.githubusercontent.com/Bizarrus/Klass/master/Screenshots/KnuDes.png)
+
 # Klass.KCode
 Full implemented KCode parser in `C#`
 
