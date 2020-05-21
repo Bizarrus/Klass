@@ -11,10 +11,29 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace KnuCli {
+    public class Autologin {
+        private string nickname = null;
+        private string password = null;
+
+        public Autologin(string nickname, string password) {
+            this.nickname = nickname;
+            this.password = password;
+        }
+
+        public string GetNickname() {
+            return this.nickname;
+        }
+
+        public string GetPassword() {
+            return this.password;
+        }
+    }
+
     public class Configuration {
         public List<ChatSystem> systems = new List<ChatSystem>();
         private string user_agent = "";
         private string applet_version = "";
+        private Autologin autologin = null;
         private List<string> modules;
         private Proxy proxy;
 
@@ -77,6 +96,18 @@ namespace KnuCli {
 
         public ChatSystem GetChatSystem(int index) {
             return this.systems[index];
+        }
+
+        public void SetAutologin(string nickname, string password) {
+            this.autologin = new Autologin(nickname, password);
+        }
+
+        public bool HasAutoLogin() {
+            return (this.autologin != null);
+        }
+
+        public Autologin GetAutologin() {
+            return this.autologin;
         }
     }
 }

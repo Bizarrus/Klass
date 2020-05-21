@@ -13,6 +13,8 @@ using System.Windows;
 using Klass.Helper;
 using KnuCli.Model;
 using System.Collections.Generic;
+using System.Windows.Threading;
+
 namespace KnuCli {
     public class Client : IClient {
         private App core;
@@ -25,6 +27,7 @@ namespace KnuCli {
         private TcpClient socket;
         protected Huffman huffman;
         protected Protocols protocols;
+        private Dictionary<string, ChannelFrame> windows = new Dictionary<string, ChannelFrame>();
 
         public Client(App core, string hostname, int port) {
             this.core       = core;
@@ -35,7 +38,42 @@ namespace KnuCli {
             this.port       = port;
         }
 
-        public App GetCore() {
+        public void CreateChannelFrame(string name, Action<ChannelFrame> callback) {
+            Thread newWindowThread = new Thread(new ThreadStart(() => {
+                SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
+
+                ChannelFrame window = new ChannelFrame(this);
+
+                window.Closed += (s, e) => Dispatcher.CurrentDispatcher.BeginInvokeShutdown(DispatcherPriority.Background);
+                windows.Add(name, window);
+                callback(window);
+
+                System.Windows.Threading.Dispatcher.Run();
+            }));
+
+            newWindowThread.SetApartmentState(ApartmentState.STA);
+            newWindowThread.Start();
+        }
+
+        public ChannelFrame[] GetChannelFrames() {
+            return (new List<ChannelFrame>(this.windows.Values)).ToArray();
+        }
+
+        public ChannelFrame GetChannelFrame(string name) {
+            ChannelFrame window = null;
+
+            if(!this.windows.TryGetValue(name, out window)) {
+                return window;
+            }
+
+            return window;
+        }
+
+        public object GetCore() {
+            return this;
+        }
+
+        public App GetAppCore() {
             return this.core;
         }
 
@@ -71,10 +109,11 @@ namespace KnuCli {
 
             this.socket = new TcpClient(this.hostname, this.port);
             Console.WriteLine("[Connect] " + this.hostname + ":" + this.port);
+
             new Thread(new ThreadStart(Run)).Start();
             
             Send(this.protocols.GetPacket("CONNECT").Get(), false, false);
-            Send(((Klass.Packets.Handshake) this.protocols.GetPacket("HANDSHAKE")).Get(this.GetCore().GetConfig().GetAppletVersion()));
+            Send(((Klass.Packets.Handshake) this.protocols.GetPacket("HANDSHAKE")).Get(this.GetAppCore().GetConfig().GetAppletVersion()));
         }
 
         public Protocols GetProtocols() {
@@ -85,6 +124,7 @@ namespace KnuCli {
             Console.WriteLine("Running...");
 
             while(true) {
+
                 try {
                     byte[] decoded      = Bundle.Decode(this.socket.GetStream(), this.key_connection);
                     Console.WriteLine("[RECEIVE] " + Encoding.UTF8.GetString(decoded, 0, decoded.Length));

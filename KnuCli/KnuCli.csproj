@@ -70,10 +70,17 @@
     <Compile Include="Protocols.cs" />
     <Compile Include="Protocol\Butler.cs" />
     <Compile Include="Model\Proxy.cs" />
+    <Compile Include="Protocol\ChannelFrame.cs" />
     <Compile Include="Protocol\ChannelList.cs" />
     <Compile Include="Protocol\Connection.cs" />
+    <Compile Include="Protocol\Generic.cs" />
     <Compile Include="Protocol\Ping.cs" />
     <Compile Include="Protocol\Popup.cs" />
+    <Compile Include="Protocol\PrivateMessage.cs" />
+    <Compile Include="Protocol\PublicMessage.cs" />
+    <Compile Include="UI\ChannelFrame.xaml.cs">
+      <DependentUpon>ChannelFrame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ClientCreation.xaml.cs">
       <DependentUpon>ClientCreation.xaml</DependentUpon>
     </Compile>
@@ -114,6 +121,10 @@
     <Folder Include="Modules\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\ChannelFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\ClientCreation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -124,6 +135,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Klass.KCode\Klass.KCode.csproj">
+      <Project>{235e33be-adec-4292-9acc-bc7613f4ac20}</Project>
+      <Name>Klass.KCode</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Klass\Klass.csproj">
       <Project>{4a2ce5d7-1367-4a8b-b2a6-1b9cc8a21abf}</Project>
       <Name>Klass</Name>

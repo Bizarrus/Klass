@@ -28,6 +28,15 @@ namespace KnuCli {
             this.protocols.Add(new Connection());
             this.protocols.Add(new ChannelList());
             this.protocols.Add(new Popup());
+            this.protocols.Add(new Generic());
+            this.protocols.Add(new PublicMessage());
+            this.protocols.Add(new PrivateMessage());
+            this.protocols.Add(new ChannelFrame());
+
+            /*
+             * @ToDo
+             * +
+             */
         }
 
         public void Handle(string data) {

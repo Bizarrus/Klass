@@ -17,17 +17,23 @@ namespace KnuCli.UI {
         public Login(Client client) {
             this.client = client;
             InitializeComponent();
+
+            if(this.client.GetAppCore().GetConfig().HasAutoLogin()) {
+                Autologin autologin = this.client.GetAppCore().GetConfig().GetAutologin();
+                this.Nickname.Text  = autologin.GetNickname();
+                this.Password.Text  = autologin.GetPassword();
+            }
         }
 
         private void Start(object sender, RoutedEventArgs e) {
-            switch(this.client.GetCore().GetConfig().GetAppletVersion()) {
+            switch(this.client.GetAppCore().GetConfig().GetAppletVersion()) {
                 case "k90cab":
                     string hash = Klass.Passwords.K90cab.Hash(this.Password.Text, this.client.GetPasswordHash());
 
                     SendLogin(this.Nickname.Text, hash, this.Channel.Text);
                 break;
                 default:
-                    MessageBox.Show("Warning:\nThe Applet-Version " + this.client.GetCore().GetConfig().GetAppletVersion() + " has no Password-Hashing, trying the online-auth by Knuddels.");
+                    MessageBox.Show("Warning:\nThe Applet-Version " + this.client.GetAppCore().GetConfig().GetAppletVersion() + " has no Password-Hashing, trying the online-auth by Knuddels.");
 
                     Klass.Helper.Password.Check(this.Nickname.Text, this.Password.Text, delegate (JObject data) {
                         if((string) data.GetValue("error") != null) {
