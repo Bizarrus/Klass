@@ -178,7 +178,7 @@ namespace Klass.KCode {
 						if (Array.IndexOf(data, (char) Type.EXTENDED, position - 1) > -1) {
 							if(is_extended) {
 								is_extended			= false;
-								ParseExtended(entry, extended_content.ToString(), extended);
+								output.Append(ParseExtended(entry, extended_content.ToString(), extended, visual_position));
 								extended_content	= new StringBuilder();
 								extended			= new int[] { -1, -1 };
 								continue;
@@ -206,18 +206,36 @@ namespace Klass.KCode {
 			return result;
 		}
 
-		private void ParseExtended(KCodeElement element, string data, int[] position) {
+		private string ParseExtended(KCodeElement element, string data, int[] position, int ending) {
 			Console.WriteLine("EXTENDED: " + data);
 
 			/* Image or Link */
 			if (data.StartsWith(">") && data.EndsWith("<")) {
 				string url = data.Substring(1, data.Length - 2);
 
-				if(url.EndsWith(".gif") || url.EndsWith(".png") || url.EndsWith(".jpg") || url.EndsWith(".jpeg")) {
+				if (url.EndsWith(".gif") || url.EndsWith(".png") || url.EndsWith(".jpg") || url.EndsWith(".jpeg")) {
 					Console.WriteLine("\tIs Image: " + url);
+					position[1] = ending;
+					Extending.Image style = new Extending.Image();
+					style.SetPosition(position);
+					style.SetValue((object) url);
+					element.AddExtended(style);
+					return null; //"<PIC:" + url + "~" + position[0] + ">";
 
 				} else {
+					position[1] = ending;
 					Console.WriteLine("\tIs Link: " + url);
+					Extending.Link style = new Extending.Link();
+					style.SetPosition(position);
+					style.SetValue((object) url);
+					element.AddExtended(style);
+
+					if(url.Contains("|")) {
+						string[] parts = url.Split('|');
+						return parts[0];
+					}
+
+					return "Link";
 				}
 
 			/* Font Size */
@@ -262,6 +280,8 @@ namespace Klass.KCode {
 				style.SetValue((object) color);
 				element.AddExtended(style);
 			}
+
+			return null;
 		}
     }
 }

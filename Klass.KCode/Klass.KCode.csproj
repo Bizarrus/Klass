@@ -65,6 +65,8 @@
     </Compile>
     <Compile Include="Klass\KCode\Extending\Color.cs" />
     <Compile Include="Klass\KCode\Extending\FontSize.cs" />
+    <Compile Include="Klass\KCode\Extending\Image.cs" />
+    <Compile Include="Klass\KCode\Extending\Link.cs" />
     <Compile Include="Klass\KCode\Extending\Property.cs" />
     <Compile Include="Klass\KCode\IExtended.cs" />
     <Compile Include="Klass\KCode\KCodeElement.cs" />

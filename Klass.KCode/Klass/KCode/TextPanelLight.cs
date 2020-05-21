@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Klass.KCode {
     public class TextPanelLight : Canvas {
@@ -23,7 +24,7 @@ namespace Klass.KCode {
         public int DefaultFontSize { get; set; } = 16;
         public Color DefaultTextColor { get; set; } = Color.FromRgb(0, 0, 0);
         public Color DefaultLinkHoverColor { get; set; } = Color.FromRgb(255, 0, 0);
-        public Color ChannelRed { get; set; } = Color.FromRgb(255, 0, 255);
+        public Color ChannelRed { get; set; } = Color.FromRgb(255, 0, 0);
         public Color ChannelGreen { get; set; } = Color.FromRgb(0, 255, 0);
         public Color ChannelBlue { get; set; } = Color.FromRgb(0, 0, 255);
 
@@ -95,7 +96,7 @@ namespace Klass.KCode {
                         int[] position = property.GetPosition();
                         int end = entry.GetText().Length - position[0] - 4;
 
-                        if (position[1] > -1) {
+                        if(position[1] > -1) {
                             end = position[0] - position[1];
                         }
 
@@ -130,11 +131,32 @@ namespace Klass.KCode {
                 }
 
                 if(this.AllowImages) {
+                    foreach(IExtended property in entry.GetExtended(Property.IMAGE)) {
+                        int[] position  = property.GetPosition();
+                        string url      = (string) property.GetValue();
 
+                        try {
+                            BitmapImage img = new BitmapImage(new Uri(url));
+                            graphics.DrawImage(img, new Rect(position[0], (position[1] - position[0]), img.PixelWidth, img.PixelHeight));
+                        } catch (Exception) {
+                            Console.WriteLine("TextPanelLight: Bad position for Image: " + position[0] + ":" + (position[1] - position[0]));
+                        }
+                    }
                 }
 
                 if(this.AllowLinks) {
+                    foreach (IExtended property in entry.GetExtended(Property.LINK)) {
+                        int[] position  = property.GetPosition();
+                        string url      = (string) property.GetValue();
 
+                        try {
+                            element.SetTextDecorations(TextDecorations.Underline, position[0], url.Length);
+                            element.SetForegroundBrush(new SolidColorBrush(Color.FromRgb(0, 0, 255)), position[0], url.Length);
+
+                        } catch (Exception) {
+                            Console.WriteLine("TextPanelLight: Bad position for Link: " + position[0] + ":" + position[1] + ":" + url.Length);
+                        }
+                    }
                 }
 
                 if(this.AllowAlignment) {

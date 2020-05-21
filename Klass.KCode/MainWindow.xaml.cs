@@ -13,7 +13,7 @@ namespace Klass.KCode {
             AddKCode("Oder als °[255,0,255]°RGB°r° Wert");
             AddKCode("Hier ein einfacher °>https://google.de/<°");
             AddKCode("Hier kommst du nach °>Google|https://google.de/<°");
-            AddKCode("Oder mal ein Bild: °>https://chat.knuddels.de/pics/gt.fig<°");
+            AddKCode("Oder mal ein Bild: °>https://chat.knuddels.de/pics/gt.gif<°");
             AddKCode("Ändern wir mal die °30°Fontsize°r°, du Opfer.");
             AddKCode("Mal eine \nNeue Line.");
             AddKCode("KCode#Neue Line.");
