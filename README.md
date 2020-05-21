@@ -28,7 +28,7 @@ TextPanelLight panel = new TextPanelLight(<content>);
 /* Allow some Snippets */
 parser.AllowBold		= true;
 parser.AllowItalic		= true;
-parser.AllowFontSize	= true;
+parser.AllowFontSize		= true;
 parser.AllowColor		= true;
 parser.AllowImages		= true;
 parser.AllowLinks		= true;
