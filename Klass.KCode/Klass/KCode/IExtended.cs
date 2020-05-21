@@ -1,13 +1,13 @@
 ﻿namespace Klass.KCode {
-    public interface IExtended {
-        Property GetType();
+	public interface IExtended {
+		Property GetType();
 
-        object GetValue();
+		object GetValue();
 
-        void SetValue(object value);
+		void SetValue(object value);
 
-        int[] GetPosition();
+		int[] GetPosition();
 
-        void SetPosition(int[] position);
-    }
+		void SetPosition(int[] position);
+	}
 }

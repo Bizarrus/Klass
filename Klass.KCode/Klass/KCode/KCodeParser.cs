@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media;
 
 namespace Klass.KCode {
 	public enum Type {
-		BOLD		= '_',
-		ITALIC		= '"',
-		EXTENDED	= '°',
-		BREAK		= '#'
+		BOLD        = '_',
+		ITALIC      = '"',
+		EXTENDED    = '°',
+		BREAK       = '#'
 	}
 
-	public enum Property
-	{
+	public enum Property {
 		UNKNOWN = -1,
-		IMAGE	= 0,
-		LINK	= 1,
-		COLOR	= 2,
-		SIZE	= 4
+		IMAGE   = 0,
+		LINK    = 1,
+		COLOR   = 2,
+		SIZE    = 4
 	}
 
 	public class KCodeParser {
@@ -44,63 +40,61 @@ namespace Klass.KCode {
 		private Color GetColor(char a, char b) {
 			switch(a) {
 				case 'R':
-					return (b == 'R' ? this.ChannelRed : Color.FromRgb(255, 0, 0));
+				return (b == 'R' ? this.ChannelRed : Color.FromRgb(255, 0, 0));
 				case 'G':
-					return (b == 'G' ? this.ChannelGreen : Color.FromRgb(0, 255, 0));
+				return (b == 'G' ? this.ChannelGreen : Color.FromRgb(0, 255, 0));
 				case 'B':
-					return (b == 'B' ? this.ChannelBlue : Color.FromRgb(0, 0, 255));
+				return (b == 'B' ? this.ChannelBlue : Color.FromRgb(0, 0, 255));
 				case 'W':
-					return Color.FromRgb(255, 255, 255);
+				return Color.FromRgb(255, 255, 255);
 				case 'K':
-					return Color.FromRgb(0, 0, 0);
+				return Color.FromRgb(0, 0, 0);
 				case 'Y':
-					return Color.FromRgb(255, 255, 0);
+				return Color.FromRgb(255, 255, 0);
 				case 'E':
-					return Color.FromRgb(0, 172, 0);
+				return Color.FromRgb(0, 172, 0);
 				case 'N':
-					return Color.FromRgb(150, 74, 0);
+				return Color.FromRgb(150, 74, 0);
 				case 'C':
-					return Color.FromRgb(0, 255, 255);
+				return Color.FromRgb(0, 255, 255);
 				case 'D':
-					return Color.FromRgb(64, 64, 64);
+				return Color.FromRgb(64, 64, 64);
 				case 'A':
-					return Color.FromRgb(128, 128, 128);
+				return Color.FromRgb(128, 128, 128);
 				case 'O':
-					return Color.FromRgb(255, 200, 0);
+				return Color.FromRgb(255, 200, 0);
 				case 'L':
-					return Color.FromRgb(192, 192, 192);
+				return Color.FromRgb(192, 192, 192);
 				case 'P':
-					return Color.FromRgb(255, 175, 175);
+				return Color.FromRgb(255, 175, 175);
 				case 'M':
-					return Color.FromRgb(255, 0, 255);
+				return Color.FromRgb(255, 0, 255);
 				default:
-					return Color.FromRgb(160, 100, 130);
+				return Color.FromRgb(160, 100, 130);
 			}
 		}
 
 		public List<KCodeElement> Parse(string content) {
 			List<KCodeElement> result = new List<KCodeElement>();
 
-			Console.WriteLine("Parsing...");
+			int position            = 0;
+			int visual_position     = 0;
+			char[] data             = content.ToCharArray();
+			StringBuilder output    = new StringBuilder();
+			KCodeElement entry      = new KCodeElement();
 
-			int position			= 0;
-			int visual_position		= 0;
-			char[] data				= content.ToCharArray();
-			StringBuilder output	= new StringBuilder();
-			KCodeElement entry		= new KCodeElement();
+			bool is_bold            = false;
+			int[] bold              = new int[] { -1, -1 };
+			List<int[]> bolds       = new List<int[]>();
 
-			bool is_bold			= false;
-			int[] bold				= new int[] { -1, -1 };
-			List<int[]> bolds		= new List<int[]>();
+			bool is_italic          = false;
+			int[] italic            = new int[] { -1, -1 };
+			List<int[]> italics     = new List<int[]>();
 
-			bool is_italic			= false;
-			int[] italic			= new int[] { -1, -1 };
-			List<int[]> italics		= new List<int[]>();
+			bool is_extended        = false;
+			int[] extended          = new int[] { -1, -1 };
+			StringBuilder extended_content  = new StringBuilder();
 
-			bool is_extended		= false;
-			int[] extended			= new int[] { -1, -1 };
-			StringBuilder extended_content	= new StringBuilder();
-			
 			for(; position < data.Length;) {
 				++visual_position;
 				char current = data[position++];
@@ -120,7 +114,7 @@ namespace Klass.KCode {
 					break;
 					case (char) Type.BOLD:
 						if(this.AllowBold) {
-							if(data[position] == (char) Type.BOLD) {
+							if(position < data.Length && data[position] == (char) Type.BOLD) {
 								output.Append((char) Type.BOLD);
 								++position;
 								continue;
@@ -144,7 +138,7 @@ namespace Klass.KCode {
 					break;
 					case (char) Type.ITALIC:
 						if(this.AllowItalic) {
-							if(data[position] == (char) Type.ITALIC) {
+							if(position < data.Length && data[position] == (char) Type.ITALIC) {
 								output.Append((char) Type.ITALIC);
 								++position;
 								continue;
@@ -167,28 +161,29 @@ namespace Klass.KCode {
 						}
 					break;
 					case (char) Type.EXTENDED:
-						/*if(data[position] == (char) Type.EXTENDED) {
+						if(position < data.Length && data[position] == (char) Type.EXTENDED) {
 							output.Append((char) Type.EXTENDED);
 							++position;
 							continue;
-						}*/
+						}
 
 						--visual_position;
 
-						if (Array.IndexOf(data, (char) Type.EXTENDED, position - 1) > -1) {
+						if(Array.IndexOf(data, (char) Type.EXTENDED, position - 1) > -1) {
 							if(is_extended) {
-								is_extended			= false;
-								output.Append(ParseExtended(entry, extended_content.ToString(), extended, visual_position));
-								extended_content	= new StringBuilder();
-								extended			= new int[] { -1, -1 };
+								is_extended = false;
+								extended[1] = visual_position;
+								output.Append(ParseExtended(entry, extended_content.ToString(), extended));
+								extended_content = new StringBuilder();
+								extended = new int[] { -1, -1 };
 								continue;
 							}
 						}
 
 						extended[0] = visual_position;
 						is_extended = !is_extended;
-					break;
-					default:
+						break;
+						default:
 						if(is_extended) {
 							extended_content.Append(current);
 						} else {
@@ -206,16 +201,13 @@ namespace Klass.KCode {
 			return result;
 		}
 
-		private string ParseExtended(KCodeElement element, string data, int[] position, int ending) {
-			Console.WriteLine("EXTENDED: " + data);
-
+		private string ParseExtended(KCodeElement element, string data, int[] position) {
 			/* Image or Link */
-			if (data.StartsWith(">") && data.EndsWith("<")) {
+			if(data.StartsWith(">") && data.EndsWith("<")) {
 				string url = data.Substring(1, data.Length - 2);
 
-				if (url.EndsWith(".gif") || url.EndsWith(".png") || url.EndsWith(".jpg") || url.EndsWith(".jpeg")) {
-					Console.WriteLine("\tIs Image: " + url);
-					position[1] = ending;
+				if(url.EndsWith(".gif") || url.EndsWith(".png") || url.EndsWith(".jpg") || url.EndsWith(".jpeg")) {
+					Console.WriteLine("\tImage: " + url);
 					Extending.Image style = new Extending.Image();
 					style.SetPosition(position);
 					style.SetValue((object) url);
@@ -223,8 +215,8 @@ namespace Klass.KCode {
 					return null; //"<PIC:" + url + "~" + position[0] + ">";
 
 				} else {
-					position[1] = ending;
-					Console.WriteLine("\tIs Link: " + url);
+					//position[1] = ending;
+					Console.WriteLine("\tLink: " + url);
 					Extending.Link style = new Extending.Link();
 					style.SetPosition(position);
 					style.SetValue((object) url);
@@ -232,31 +224,41 @@ namespace Klass.KCode {
 
 					if(url.Contains("|")) {
 						string[] parts = url.Split('|');
+						style.SetText(parts[0]);
 						return parts[0];
 					}
+
+					style.SetText("Link");
 
 					return "Link";
 				}
 
 			/* Font Size */
-			} else if (data.All(char.IsDigit)) {
+			} else if(data.All(char.IsDigit)) {
 				Extending.FontSize style = new Extending.FontSize();
 				style.SetPosition(position);
+
 				try {
 					style.SetValue((object) Int32.Parse(data));
 					element.AddExtended(style);
-				} catch(Exception e) {}
+				} catch(Exception e) {
+					Console.WriteLine("Error: " + e.Message);
+				}
 
 			/* RGB Color */
-			} else if (data.StartsWith("[") && data.EndsWith("]")) {
-				string rgb		= data.Substring(1, data.Length - 2);
-				string[] parts	= rgb.Split(',');
-				Color color		= Color.FromRgb((byte) Int32.Parse(parts[0]), (byte) Int32.Parse(parts[1]), (byte) Int32.Parse(parts[2]));
+			} else if(data.StartsWith("[") && data.EndsWith("]")) {
+				string rgb      = data.Substring(1, data.Length - 2);
+				string[] parts  = rgb.Split(',');
+				try {
+					Color color     = Color.FromRgb((byte) Int32.Parse(parts[0]), (byte) Int32.Parse(parts[1]), (byte) Int32.Parse(parts[2]));
 
-				Extending.Color style = new Extending.Color();
-				style.SetPosition(position);
-				style.SetValue((object) color);
-				element.AddExtended(style);
+					Extending.Color style = new Extending.Color();
+					style.SetPosition(position);
+					style.SetValue((object) color);
+					element.AddExtended(style);
+				} catch(Exception e) {
+					Console.WriteLine("Error: " + e.Message);
+				}
 
 			/* Restore */
 			} else if(data.Equals("r")) {
@@ -272,8 +274,8 @@ namespace Klass.KCode {
 
 			/* Color */
 			} else {
-				char[] chars	= data.ToCharArray();
-				Color color		= GetColor(chars[0], (chars.Length == 2 ? chars[1] : '0'));
+				char[] chars    = data.ToCharArray();
+				Color color     = GetColor(chars[0], (chars.Length == 2 ? chars[1] : '0'));
 
 				Extending.Color style = new Extending.Color();
 				style.SetPosition(position);
@@ -283,5 +285,5 @@ namespace Klass.KCode {
 
 			return null;
 		}
-    }
+	}
 }
