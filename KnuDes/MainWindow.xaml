@@ -3,19 +3,50 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:KnuDes"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBox Name="Input" Grid.Column="1" Grid.Row="0" KeyUp="OnChange" />
-        <GridSplitter />
-        <WrapPanel Name="Output" Grid.Column="1" Grid.Row="1" />
+        <TextBox Name="Input" Grid.Column="0" Grid.Row="0" KeyUp="OnChange" />
+        <WrapPanel Grid.Column="0" Grid.Row="1" Background="Gray">
+            <Label>FontSize:</Label>
+            <ComboBox Name="DefaultFontSize" Width="50" SelectionChanged="OnChangeFontSize" />
+            <Label>Background:</Label>
+            <xctk:ColorPicker Name="Background" Width="40" SelectedColorChanged="OnChangeBackground" />
+            <Label>TextColor:</Label>
+            <xctk:ColorPicker Name="TextColor" Width="40" SelectedColorChanged="OnChangeTextColor" />
+            <Label>LinkHover:</Label>
+            <xctk:ColorPicker Name="LinkHover" Width="40" SelectedColorChanged="OnChangeLinkHover" />
+            <Label>Red:</Label>
+            <xctk:ColorPicker Name="Red" Width="40" SelectedColorChanged="OnChangeRed" />
+            <Label>Green:</Label>
+            <xctk:ColorPicker Name="Green" Width="40" SelectedColorChanged="OnChangeGreen" />
+            <Label>Blue:</Label>
+            <xctk:ColorPicker Name="Blue" Width="40" SelectedColorChanged="OnChangeBlue" />
+        </WrapPanel>
+        <WrapPanel Grid.Column="0" Grid.Row="2" Background="Gray">
+            <CheckBox Name="AllowBold" Content="Bold" IsChecked="True" Margin="5,7,0,0" Click="OnChangeAllowment" />
+            <CheckBox Name="AllowItalic" Content="Italic" IsChecked="True" Margin="5,7,0,0" Click="OnChangeAllowment" />
+            <CheckBox Name="AllowFontSize" Content="FontSize" IsChecked="True" Margin="5,7,0,0" Click="OnChangeAllowment" />
+            <CheckBox Name="AllowColor" Content="Color" IsChecked="True" Margin="5,7,0,0" Click="OnChangeAllowment"/>
+            <CheckBox Name="AllowImages" Content="Images" IsChecked="True" Margin="5,7,0,0" Click="OnChangeAllowment" />
+            <CheckBox Name="AllowLinks" Content="Links" IsChecked="True" Margin="5,7,0,0" Click="OnChangeAllowment" />
+            <CheckBox Name="AllowAlignment" Content="Alignment" IsChecked="True" Margin="5,7,0,0" Click="OnChangeAllowment"/>
+            <CheckBox Name="AllowIndentation" Content="Indentation" IsChecked="True" Margin="5,7,0,0" Click="OnChangeAllowment" />
+            <CheckBox Name="AllowBreaklines" Content="Breaklines" IsChecked="True" Margin="5,7,0,0" />
+        </WrapPanel>
+        <ScrollViewer Grid.Column="0" Grid.Row="3" HorizontalScrollBarVisibility="Auto">
+            <WrapPanel Name="Output" />
+        </ScrollViewer>
     </Grid>
 </Window>
