@@ -26,23 +26,23 @@ Full implemented KCode parser in `C#`
 TextPanelLight panel = new TextPanelLight(<content>);
 
 /* Allow some Snippets */
-parser.AllowBold				= true;
-parser.AllowItalic				= true;
-parser.AllowFontSize			= true;
-parser.AllowColor				= true;
-parser.AllowImages				= true;
-parser.AllowLinks				= true;
-parser.AllowAlignment			= true;
-parser.AllowIndentation			= true;
-parser.AllowBreaklines			= true;
+parser.AllowBold		= true;
+parser.AllowItalic		= true;
+parser.AllowFontSize		= true;
+parser.AllowColor		= true;
+parser.AllowImages		= true;
+parser.AllowLinks		= true;
+parser.AllowAlignment		= true;
+parser.AllowIndentation		= true;
+parser.AllowBreaklines		= true;
 
 /* Default Styles */
-parser.DefaultFontSize			= 16;
-parser.DefaultTextColor			= Color.FromRgb(0, 0, 0);
+parser.DefaultFontSize		= 16;
+parser.DefaultTextColor		= Color.FromRgb(0, 0, 0);
 parser.DefaultLinkHoverColor	= Color.FromRgb(255, 0, 0);
-parser.ChannelRed				= Color.FromRgb(255, 0, 0);
-parser.ChannelGreen				= Color.FromRgb(0, 255, 0);
-parser.ChannelBlue				= Color.FromRgb(0, 0, 255);
+parser.ChannelRed		= Color.FromRgb(255, 0, 0);
+parser.ChannelGreen		= Color.FromRgb(0, 255, 0);
+parser.ChannelBlue		= Color.FromRgb(0, 0, 255);
 
 /* You can set the content on constructor or here */
 panel.SetContent(<content>);
