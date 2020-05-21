@@ -22,6 +22,8 @@ A KCode Designer.
 
 ![KnuDes](https://raw.githubusercontent.com/Bizarrus/Klass/master/Screenshots/KnuDes.png)
 
+[Documentation](https://github.com/Bizarrus/Klass/wiki/KnuDes)
+
 # Klass.KCode
 Full implemented KCode parser in `C#`
 
