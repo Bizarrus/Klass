@@ -109,7 +109,8 @@ namespace Klass.KCode {
 					break;
 					case (char) Type.BREAK:
 						if(this.AllowBreaklines) {
-							output.Append("\n........ ");
+							output.Append("\n");
+							output.Append("........ ");
 						}
 					break;
 					case (char) Type.BOLD:
@@ -173,10 +174,32 @@ namespace Klass.KCode {
 							if(is_extended) {
 								is_extended = false;
 								extended[1] = output.ToString().Length;
-								output.Append(ParseExtended(entry, extended_content.ToString(), (position + 1 < data.Length ? data[position + 1] : '-'), extended));
-								extended[1] = output.ToString().Length;
-								extended_content = new StringBuilder();
-								extended = new int[] { -1, -1 };
+								string text = ParseExtended(entry, extended_content.ToString(), (position + 1 < data.Length ? data[position + 1] : '-'), extended);
+
+								switch(text) {
+									case "\0":
+										if(is_bold) {
+											is_bold = false;
+											bold[1] = output.ToString().Length;
+											bolds.Add(bold);
+											bold = new int[] { -1, -1 };
+										}
+
+										if(is_italic) {
+											is_italic = false;
+											italic[1] = output.ToString().Length;
+											italics.Add(italic);
+											italic = new int[] { -1, -1 };
+										}
+								break;
+									default:
+										output.Append(text);
+									break;
+								}
+								
+								extended[1]			= output.ToString().Length;
+								extended_content	= new StringBuilder();
+								extended			= new int[] { -1, -1 };
 								continue;
 							}
 						}
@@ -194,6 +217,27 @@ namespace Klass.KCode {
 				}
 			}
 
+			if(is_bold) {
+				is_bold = false;
+				bold[1] = output.ToString().Length;
+				bolds.Add(bold);
+				bold = new int[] { -1, -1 };
+			}
+
+			if(is_italic) {
+				is_italic = false;
+				italic[1] = output.ToString().Length;
+				italics.Add(italic);
+				italic = new int[] { -1, -1 };
+			}
+
+			if(is_extended) {
+				is_extended = false;
+				output.Append(ParseExtended(entry, extended_content.ToString(), (position + 1 < data.Length ? data[position + 1] : '-'), extended));
+				extended_content = new StringBuilder();
+				extended = new int[] { -1, -1 };
+			}
+
 			entry.SetText(output.ToString());
 			entry.SetBold(bolds);
 			entry.SetItalics(italics);
@@ -205,7 +249,7 @@ namespace Klass.KCode {
 		private string ParseExtended(KCodeElement element, string data, char next, int[] position) {
 			/* Image or Link */
 			if(data.StartsWith(">") && data.EndsWith("<")) {
-				string url = data.Substring(1, data.Length - 2);
+				string url	= data.Substring(1, data.Length - 2);
 
 				if(url.EndsWith(".gif") || url.EndsWith(".png") || url.EndsWith(".jpg") || url.EndsWith(".jpeg")) {
 					Console.WriteLine("\tImage: " + url);
@@ -216,7 +260,7 @@ namespace Klass.KCode {
 					return null; //"<PIC:" + url + "~" + position[0] + ">";
 
 				} else {
-					//position[1] = ending;
+					position[1] = data.Length;
 					Console.WriteLine("\tLink: " + url);
 					Extending.Link style = new Extending.Link();
 					style.SetPosition(position);
@@ -263,15 +307,7 @@ namespace Klass.KCode {
 
 			/* Restore */
 			} else if(data.Equals("r")) {
-				Extending.FontSize size = new Extending.FontSize();
-				size.SetPosition(position);
-				size.SetValue((object) this.DefaultFontSize);
-				element.AddExtended(size);
-
-				Extending.Color style = new Extending.Color();
-				style.SetPosition(position);
-				style.SetValue((object) this.DefaultTextColor);
-				element.AddExtended(style);
+				return "\0";
 
 			/* Color */
 			} else {
