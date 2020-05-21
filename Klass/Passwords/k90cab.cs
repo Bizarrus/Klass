@@ -72,9 +72,9 @@ namespace Klass.Passwords {
 		}
 
 		private static int Hash(string input) {
-			int minimum = 0;
-			int maximum = 0;
-			int length = input.Length;
+			int minimum		= 0;
+			int maximum		= 0;
+			int length		= input.Length;
 			int calculated_hash;
 
 			if(length < 19) {
@@ -95,7 +95,7 @@ namespace Klass.Passwords {
 
 			calculated_hash = minimum ^ maximum;
 
-			return calculated_hash & 0xFFFFFF ^ calculated_hash >> 24;
+			return (calculated_hash & 0xFFFFFF ^ calculated_hash >> 24);
 		}
 		private static string HashWithKey(string input, string key) {
 			var output	= new StringBuilder();

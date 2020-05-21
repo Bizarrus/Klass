@@ -4027,12 +4027,17 @@ namespace Klass.Networking {
 			for (var i = 0; i < buffer.Length; i++) {
 				var bitCount = bits.Length - (i * 8);
 
-				buffer[i] = (byte) Convert.ToInt32(
-													bits.Substring(
-														bitCount - 8 <= 0 ? 0 : bitCount - 8,
-														bitCount - 8 <= 0 ? bitCount : 8
-													)
-													, 2);
+				try {
+
+					buffer[i] = (byte) Convert.ToInt32(
+														bits.Substring(
+															bitCount - 8 <= 0 ? 0 : bitCount - 8,
+															bitCount - 8 <= 0 ? bitCount : 8
+														)
+														, 2);
+				} catch(Exception e) {
+
+				}
 			}
 			return buffer;
 		}

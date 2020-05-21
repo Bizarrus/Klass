@@ -4,6 +4,7 @@
  */
 namespace Klass.Helper {
     public interface IClient {
+        object GetCore();
         void Send(byte[] data, bool encode, bool compress);
         void Send(byte[] data);
     }
