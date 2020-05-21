@@ -45,7 +45,7 @@ namespace KnuCli {
 
         private void LoadConfiguration() {
             // @ToDo bad path - Only for DEV!
-            using(JsonTextReader reader = new JsonTextReader(File.OpenText(@"../../Config/Configuration.json"))) {
+            using(JsonTextReader reader = new JsonTextReader(File.OpenText(@"Config/Configuration.json"))) {
                 JObject options         = (JObject) JToken.ReadFrom(reader);
                 JObject proxy_settings  = (JObject) options.GetValue("proxy");
                 this.user_agent         = (string) options.GetValue("user_agent");
@@ -65,7 +65,7 @@ namespace KnuCli {
 
         private void LoadServers() {
             // @ToDo bad path - Only for DEV!
-            using(JsonTextReader reader = new JsonTextReader(File.OpenText(@"../../Config/Servers.json"))) {
+            using(JsonTextReader reader = new JsonTextReader(File.OpenText(@"Config/Servers.json"))) {
                 foreach(JObject entry in (JArray) JToken.ReadFrom(reader)) {
                     this.systems.Add(new ChatSystem {
                         ID          = (string) entry.GetValue("id"),

@@ -4023,23 +4023,18 @@ namespace Klass.Networking {
 			}
 
 			var bits = new string(bitBuffer.ToString().Reverse().ToArray());
-			byte[] buffer = new byte[bits.Length / 8 + 1];
-			for (var i = 0; i < buffer.Length; i++) {
-				var bitCount = bits.Length - (i * 8);
+			var buffer = new List<byte>();
 
-				try {
+			for (int index = bits.Length; index > 0;) {
+				buffer.Add((byte) Convert.ToInt32(bits.Substring(
+					index - 8 < 0 ? 0 : index - 8,
+					index < 8 ? index : 8
+				), 2));
 
-					buffer[i] = (byte) Convert.ToInt32(
-														bits.Substring(
-															bitCount - 8 <= 0 ? 0 : bitCount - 8,
-															bitCount - 8 <= 0 ? bitCount : 8
-														)
-														, 2);
-				} catch(Exception e) {
-
-				}
+				index -= index < 8 ? index : 8;
 			}
-			return buffer;
+
+			return buffer.ToArray();
 		}
 
 		private int GetNodeIndex(byte[] buffer, ref int index, ref int depth, ref bool end) {

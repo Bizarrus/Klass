@@ -33,7 +33,7 @@ namespace Klass.KCode {
 		public int DefaultFontSize { get; set; } = 16;
 		public Color DefaultTextColor { get; set; } = Color.FromRgb(0, 0, 0);
 		public Color DefaultLinkHoverColor { get; set; } = Color.FromRgb(255, 0, 0);
-		public Color ChannelRed { get; set; } = Color.FromRgb(255, 0, 255);
+		public Color ChannelRed { get; set; } = Color.FromRgb(255, 0, 0);
 		public Color ChannelGreen { get; set; } = Color.FromRgb(0, 255, 0);
 		public Color ChannelBlue { get; set; } = Color.FromRgb(0, 0, 255);
 

@@ -190,9 +190,9 @@ namespace KnuPro {
                                 }
 
                                 Debugger.Write("!!!!!!!!!!!!!!!!!!!!!!!!!!!! HANDSHAKE !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                                Environment.Exit(0);
+                                //Environment.Exit(0);
                             break;
-                            case "n":
+                           /* case "n":
                                 Debugger.Write("!!!!!!!!!!!!!!!!!!!!!!!!!!!! LOGIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                                 size = Utils.CountToken(Data);
                                 Debugger.Write("Size: " + size);
@@ -205,7 +205,7 @@ namespace KnuPro {
 
                                 Debugger.Write("!!!!!!!!!!!!!!!!!!!!!!!!!!!! LOGIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                                 Environment.Exit(0);
-                            break;
+                            break;*/
                         }
                     }
                 }

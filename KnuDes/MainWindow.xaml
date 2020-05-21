@@ -43,7 +43,7 @@
             <CheckBox Name="AllowLinks" Content="Links" IsChecked="True" Margin="5,7,0,0" Click="OnChangeAllowment" />
             <CheckBox Name="AllowAlignment" Content="Alignment" IsChecked="True" Margin="5,7,0,0" Click="OnChangeAllowment"/>
             <CheckBox Name="AllowIndentation" Content="Indentation" IsChecked="True" Margin="5,7,0,0" Click="OnChangeAllowment" />
-            <CheckBox Name="AllowBreaklines" Content="Breaklines" IsChecked="True" Margin="5,7,0,0" />
+            <CheckBox Name="AllowBreaklines" Content="Breaklines" IsChecked="True" Margin="5,7,0,0" Click="OnChangeAllowment" />
         </WrapPanel>
         <ScrollViewer Grid.Column="0" Grid.Row="3" HorizontalScrollBarVisibility="Auto">
             <WrapPanel Name="Output" />
